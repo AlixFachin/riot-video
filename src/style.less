@@ -1,0 +1,54 @@
+@first-color: #d6ae7b;
+@second-color: #eacda3;
+
+@video-width: 600px;
+
+body {
+  background: #eacda3; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    @first-color,
+    @second-color
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    @first-color,
+    @second-color
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.video-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.video-panel > video {
+  max-width: @video-width;
+  width: @video-width;
+}
+
+.control-panel {
+  background-color: rgba(0, 0, 0, 0.2);
+  min-height: 2em;
+  width: @video-width;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(0);
+  transition: all 0.4s ease-in-out;
+}
+.control-panel.visible {
+  transform: translateY(-100%);
+  visibility: visible;
+  opacity: 1;
+}
+
+.control-panel > input {
+  flex-grow: 1;
+}

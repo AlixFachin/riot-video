@@ -1,0 +1,36 @@
+<video-controls>
+    <div class={ "control-panel" + (props.displayPanel ? ' visible' : '' ) } >
+        <button class="player__button toggle" onclick={togglePlayButton}>▶️</button>
+        <button class="player__button skip" data-skipvalue="-2" onclick={props.skipFunc}><<</button>
+        <button class="player__button skip" data-skipvalue="2" onclick={props.skipFunc}>>></button>
+        <input type="range" name="progress" min="0" max="100" step="1" value={props.videopercent || 0} onchange={progressChange} >
+    </div>
+
+    <style>
+        button {
+            background-color: rgba(0,0,0,0);
+            color: white;
+            border: 0px;
+        }
+    </style>
+
+    <script>
+        export default {
+            togglePlayButton(event) {
+                if (event.target.innerText === "⏸") {
+                    event.target.innerText = "▶️"
+                } else {
+                    event.target.innerText = "⏸"
+                }
+                event.preventDefault();
+                this.props.togglePlayFunc();
+            },
+            progressChange(event) {
+                if (!isNaN(Number(event.target.value))) {
+                    this.props.setcurrenttime(event.target.value);
+                }
+            }
+        }
+    </script>
+
+</video-controls>

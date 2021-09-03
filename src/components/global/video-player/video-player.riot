@@ -1,0 +1,67 @@
+<video-player>
+ <div class="video-panel">
+    <video  
+        controlsList="nodownload" width=600 
+        onclick={togglePlayStatus}
+        ontimeupdate={handleprogress}
+        >
+            <source src="../../../assets/surfer.mp4" type="video/mp4" >
+            Browser doesn't support embedded videos (?)
+    </video>
+    <video-controls 
+        displayPanel="{!this.state.isVideoPlaying}"
+        togglePlayFunc={togglePlayStatus}
+        skipFunc={videoSkip}
+        videopercent={videopercent}
+        setcurrenttime={setCurrentTime}
+        >
+    </video-controls>
+</div>
+<script>
+
+    import VideoControls from "../video-controls/video-controls.riot"
+
+    export default function VideoPlayer() {
+        
+        return {
+            components: {
+                VideoControls,
+            },
+            state: {
+                videoName: 'surfer.mp4',
+                isVideoPlaying: false,
+                videopercent: 0,
+            },
+            togglePlayStatus() {
+                const videoElement = this.$('video');
+                let newVideoPlayingState;
+                if (!this.state.isVideoPlaying) {
+                    videoElement.play();
+                    newVideoPlayingState = true;
+                } else {
+                    videoElement.pause();
+                    newVideoPlayingState = false;
+                }
+                this.update({isVideoPlaying: newVideoPlayingState});
+            },
+            videoSkip: function(e) {
+                const videoElement = this.$('video');
+                videoElement.currentTime += Number(e.target.dataset.skipvalue);
+            },
+            setCurrentTime: function(newPercent) {
+                const videoElement = this.$('video');
+                videoElement.currentTime = Number(newPercent)/100*videoElement.duration;
+            },
+            handleprogress() {
+                const videoElement = this.$('video');
+                const currentPercent = videoElement.currentTime / videoElement.duration;
+                this.state.videopercent = Number(currentPercent);
+            }
+
+        }
+    }
+
+</script>
+
+
+</video-player>
